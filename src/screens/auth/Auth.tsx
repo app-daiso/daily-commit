@@ -63,7 +63,7 @@ export function AuthScreen({ navigation }: Props) {
         token,
       });
     }
-  }, [token])  
+  }, [token]);
 
   return (
     <View style={styles.container}>
