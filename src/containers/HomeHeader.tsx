@@ -4,6 +4,7 @@ import { Header, } from 'react-native-elements';
 import { useDispatch, useSelector, } from 'react-redux';
 import { getUserNameAsync, GithubUserNameState, GithubState, } from '../stores/github';
 import { RootState, } from '../stores';
+import { colors, } from '../lib/colors';
 
 function HomeHeader() {  
   const accessToken = useSelector((state: RootState) => (state.github as GithubState).accessToken).data?.access_token;
@@ -18,9 +19,9 @@ function HomeHeader() {
 
   return (    
     <>      
-      {loading && <Header centerComponent={{ text: '로딩 중...', style: { color: '#fff' } }} style={styles.header}/>}
-      {error && <Header centerComponent={{ text: '에러 발생', style: { color: '#fff' } }} style={styles.header}/>}
-      {data && <Header centerComponent={{ text: `${data.name}님 안녕하세요!`, style: { color: '#fff' } }} style={styles.header}/>}
+      {loading && <Header centerComponent={{ text: '로딩 중...', style: { color: '#fff' } }} style={styles.header} containerStyle={{backgroundColor: colors.main}} />}
+      {error && <Header centerComponent={{ text: '에러 발생', style: { color: '#fff' } }} style={styles.header} containerStyle={{backgroundColor: colors.main}} />}
+      {data && <Header centerComponent={{ text: `${data.name}님 안녕하세요!`, style: { color: '#fff' } }} style={styles.header} containerStyle={{backgroundColor: colors.main}}/>}
     </>
   );
 }
