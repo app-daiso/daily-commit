@@ -1,5 +1,5 @@
 import { createAsyncAction, } from 'typesafe-actions';
-import { AccessTokenResponse, AccessTokenRequest, } from '../../api/github';
+import { AccessTokenResponse, AccessTokenRequest, } from '../../api/githubAccessToken';
 import { AxiosError, } from 'axios';
 
 export const POST_ACCESS_TOKEN_REQUEST = `github/POST_ACCESS_TOKEN_REQUEST`;
