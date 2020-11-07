@@ -5,13 +5,12 @@ import { RootStackParamList } from '../../shared-interfaces';
 
 export type Props = StackScreenProps<RootStackParamList, 'Home'>;
 
-export function HomeScreen({ route, navigation }: Props ) {
+export function HomeScreen({ route, }: Props ) {
   const { token } = route.params;
   console.log(token);
-
   return (
     <View style={styles.container}>
-      <Text>Details Screen</Text>
+      <Text>Home Screen</Text>
     </View>
   );
 }

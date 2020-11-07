@@ -1,14 +1,24 @@
 import React from 'react';
 import { Provider, } from 'react-redux';
-import { createStore, } from 'redux';
-import rootReducer from './src/stores/modules/index';
+import { createStore, applyMiddleware, } from 'redux';
+import logger from 'redux-logger';
+import { composeWithDevTools, } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer, { rootSaga, } from './src/stores';
 import * as firebase from 'firebase';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthScreen } from './src/screens/auth/Auth';
 import { HomeScreen } from './src/screens/home/Home';
 
-const store = createStore(rootReducer);
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware, logger,)),  
+);
+
+sagaMiddleware.run(rootSaga);
 
 const firebaseConfig = {
   apiKey: "AIzaSyCPb5d46YfLqY4mdaQJHRKMum_oMU-6T40",
