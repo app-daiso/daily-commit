@@ -4,7 +4,7 @@ import { useDispatch, useSelector, } from 'react-redux';
 import { useNavigation, } from '@react-navigation/native';
 import { RootState, } from '../stores';
 import AuthButton from '../components/AuthButton';
-import { postAccessTokenAsync, } from '../stores/github';
+import { GithubState, postAccessTokenAsync, } from '../stores/github';
 import { Text, } from 'react-native';
 
 const REDIRECT_URL = getDefaultReturnUrl() || makeRedirectUri({       
@@ -19,7 +19,7 @@ const discovery = {
 
 function GithubLoginContainer() {
   const navigation = useNavigation();
-  const { data, loading, error, } = useSelector((state: RootState) => state.github.accessToken);
+  const { data, loading, error, } = useSelector((state: RootState) => (state.github as GithubState).accessToken);
   const dispatch = useDispatch();
 
   const [request, response, promptAsync] = useAuthRequest(

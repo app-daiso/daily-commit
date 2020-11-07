@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 export async function getGithubUserName(request: GetUserNameRequest) {
-  const response = await axios.post<GetUserNameResponse>(`https://api.github.com/user`, null, {
+  const response = await axios.get<GetUserNameResponse>(`https://api.github.com/user`, {
     headers: {
-      accept: `application/vnd.github.v3+json`,
-      authorization: request.token,
+      Accept: `application/vnd.github.v3+json`,
+      Authorization: request.token,
     }
   });
 
