@@ -1,6 +1,6 @@
 import { getUserNameAsync, GET_USER_NAME_REQUEST, postAccessTokenAsync, POST_ACCESS_TOKEN_REQUEST, } from './actions';
 import { postAccessToken, } from '../../api/githubAccessToken';
-import { getGithubUserName, } from '../../api/githubUserName';
+import { getGithubUserName, } from '../../api/githubUserInfo';
 import { takeEvery, } from 'redux-saga/effects';
 import createAsyncSaga from '../../lib/createAsyncSaga';
 

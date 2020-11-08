@@ -1,6 +1,6 @@
 import { createAsyncAction, } from 'typesafe-actions';
 import { AccessTokenResponse, AccessTokenRequest, } from '../../api/githubAccessToken';
-import { GetUserNameRequest, GetUserNameResponse, } from '../../api/githubUserName';
+import { GetUserNameRequest, GetUserNameResponse, } from '../../api/githubUserInfo';
 import { AxiosError, } from 'axios';
 
 // ACCESS_TOKEN

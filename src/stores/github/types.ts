@@ -1,7 +1,7 @@
 import * as actions from './actions';
 import { ActionType } from 'typesafe-actions';
 import { AccessTokenResponse, } from '../../api/githubAccessToken';
-import { GetUserNameResponse, } from '../../api/githubUserName';
+import { GetUserNameResponse, } from '../../api/githubUserInfo';
 
 export type GithubAction = ActionType<typeof actions>;
 

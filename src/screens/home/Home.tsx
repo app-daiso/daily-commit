@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../shared-interfaces';
-import HomeHeader from '../../containers/HomeHeader';
+import Header from '../../containers/HomeHeader';
+import TodayCommit from '../../containers/HomeTodayCommit';
 
 export type Props = StackScreenProps<RootStackParamList, 'Home'>;
 
@@ -13,7 +14,8 @@ export function HomeScreen({ route, }: Props ) {
   
   return (
     <View style={styles.container}>
-      <HomeHeader />      
+      <Header />
+      <TodayCommit />
     </View>
   );
 }
