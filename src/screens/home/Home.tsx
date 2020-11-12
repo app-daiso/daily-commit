@@ -4,18 +4,20 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../shared-interfaces';
 import Header from '../../containers/HomeHeader';
 import TodayCommit from '../../containers/HomeTodayCommit';
+import FirstCommitHistory from '../../containers/HomeFirstCommitHistory';
+import AllCommitList from '../../containers/HomeAllCommitList';
+import Setting from '../../containers/HomeSetting';
 
 export type Props = StackScreenProps<RootStackParamList, 'Home'>;
 
-export function HomeScreen({ route, }: Props ) {  
-  // TODO: 2. 사용자 커밋 받아오기
-
-  // TODO: 3. 전체 커밋 현황 받아오기
-  
+export function HomeScreen({ route, }: Props ) {    
   return (
     <View style={styles.container}>
       <Header />
       <TodayCommit />
+      <FirstCommitHistory />
+      <AllCommitList />
+      <Setting />
     </View>
   );
 }
@@ -23,6 +25,9 @@ export function HomeScreen({ route, }: Props ) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',    
     backgroundColor: '#fff',
+    overflow: 'scroll',
   },
 });
