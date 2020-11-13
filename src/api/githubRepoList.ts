@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { all } from 'redux-saga/effects';
 
 export async function getGithubUserRepos(request: GetRepoListRequest) {
-  const response = await axios.get<GetRepoListResponse[]>(`https://api.github.com/user/repos`, {
+  const response = await axios.get<GetRepoListResponse[]>(`https://api.github.com/user/repos?per_page=100`, {
     headers: {
       Accept: `application/vnd.github.v3+json`,
       Authorization: request.token,

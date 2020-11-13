@@ -1,7 +1,7 @@
 import { createAsyncAction, } from 'typesafe-actions';
 import { AccessTokenResponse, AccessTokenRequest, } from '../../api/githubAccessToken';
 import { GetUserNameRequest, GetUserNameResponse, } from '../../api/githubUserInfo';
-import { GetRepoListRequest, GetRepoListResponse, } from '../../api/githubTodayCommitHistory';
+import { GetRepoListRequest, GetRepoListResponse, } from '../../api/githubRepoList';
 import { GetCommitListRequest, GetCommitListResponse, } from '../../api/githubCommitList';
 import { AxiosError, } from 'axios';
 

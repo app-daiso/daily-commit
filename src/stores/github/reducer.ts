@@ -137,7 +137,9 @@ const github = createReducer<GithubState
     commitList: {
       loading: false,
       error: action.payload,
-      data: null,
+      data: {
+        ...(state as any).commitList.data,
+      },
     }
   }),
 });

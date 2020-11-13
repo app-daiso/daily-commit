@@ -2,7 +2,7 @@ import * as actions from './actions';
 import { ActionType } from 'typesafe-actions';
 import { AccessTokenResponse, } from '../../api/githubAccessToken';
 import { GetUserNameResponse, } from '../../api/githubUserInfo';
-import { GetRepoListResponse, } from '../../api/githubTodayCommitHistory';
+import { GetRepoListResponse, } from '../../api/githubRepoList';
 import { CommitList, } from '../../api/githubCommitList';
 
 export type GithubAction = ActionType<typeof actions>;

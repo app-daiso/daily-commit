@@ -1,23 +1,24 @@
 import { CommitList, } from '../api/githubCommitList';
 
-export interface TodayCommitList {
-  [index: number]: CommitList;
-}[];
+export interface TodayCommit {
+  timestamp: number;
+  message: string;
+};
 
 type TodayCommitListState = {
-  todayCommitList: TodayCommitList;
+  todayCommitList: TodayCommit[];
 };
 
 const SET_TODAY_COMMIT_LIST = 'todayCommit/SET_TODAY_COMMIT_LIST' as const;
 
-export const setCommitList = (diff: TodayCommitList) => ({
+export const setCommitList = (diff: TodayCommit[]) => ({
   type: SET_TODAY_COMMIT_LIST,  
   payload: diff,
 });
 
 type GetCommitListAction = ReturnType<typeof setCommitList>;
 
-const initialState: TodayCommitListState= {
+const initialState: TodayCommitListState = {
   todayCommitList: [],
 };
 

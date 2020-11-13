@@ -28,7 +28,7 @@ export function HomeScreen({ route, }: Props ) {
   
   const accessToken = useSelector((state: RootState) => (state.github as GithubState).accessToken).data?.access_token;
 
-  const userName = useSelector((state: RootState) => (state.github as GithubUserNameState).userName).data?.login;
+  const userName = useSelector((state: RootState) => (state.github as GithubUserNameState).userName).data?.name;
   const userNameLoading = useSelector((state: RootState) => (state.github as GithubUserNameState).userName).loading;
   const userNameError = useSelector((state: RootState) => (state.github as GithubUserNameState).userName).error;
   
@@ -78,47 +78,63 @@ export function HomeScreen({ route, }: Props ) {
 
     const _todayCommitList = Object.entries(commitList)
       .map(commit => {
-        const data = commit[1];
-        const todayTimestamp = new Date();  
-        const commitTimestamp = new Date(data.committer?.timestamp).getTime();
-        let todayTimestamp00_00: number = 0;
-        let todayTimestamp24_00: number = 0;
+        const repoName = commit[0];
+        const commits = commit[1];
 
-        todayTimestamp.setHours(0);
-        todayTimestamp.setMinutes(0);
-        todayTimestamp.setSeconds(0);
-        todayTimestamp00_00 = todayTimestamp.getTime();
-        todayTimestamp.setHours(23);
-        todayTimestamp.setMinutes(59);
-        todayTimestamp.setSeconds(59);
-        todayTimestamp24_00 = todayTimestamp.getTime();
+        const filterCommit = commits.map(data => {
+          const todayTimestamp = new Date();
+          const commitTimestamp = new Date(data.commit?.author?.date).getTime();
+          let todayTimestamp00_00: number = 0;
+          let todayTimestamp24_00: number = 0;
+  
+          todayTimestamp.setHours(0);
+          todayTimestamp.setMinutes(0);
+          todayTimestamp.setSeconds(0);
+          todayTimestamp00_00 = todayTimestamp.getTime();
+          todayTimestamp.setHours(23);
+          todayTimestamp.setMinutes(59);
+          todayTimestamp.setSeconds(59);
+          todayTimestamp24_00 = todayTimestamp.getTime();
 
-        if (data.committer?.name !== userName) {
-          return;
-        }
+          if (data.commit?.author.name !== userName) {
+            return;
+          }
 
-        if (commitTimestamp <= todayTimestamp00_00) {
-          return;
-        }
+          if (commitTimestamp <= todayTimestamp00_00) {
+            return;
+          }
 
-        if (commitTimestamp > todayTimestamp24_00) {
-          return;
-        }
+          if (commitTimestamp > todayTimestamp24_00) {
+            return;
+          }
+          
+          return data;
+        })
+        .filter((each): each is CommitList => each !== undefined);
 
-        return data;
+        return [repoName, filterCommit];
       })
-      .filter((each): each is CommitList => each !== undefined)
-      .sort((a: CommitList, b: CommitList) => {
-        return new Date(a.committer?.timestamp).getTime() - new Date(b.committer?.timestamp).getTime();
+      .filter((each): each is [string, CommitList[]] => each[1].length !== 0)
+      .map(each => each[1])
+      .flat()
+      .map(each => {
+        return {
+          timestamp: new Date(each.commit.author.date).getTime(),
+          message: each.commit.message,
+        }
+      })
+      .sort((a, b) => {
+        return b.timestamp - a.timestamp;
       });
-    console.log(`result`, _todayCommitList);
+
+    dispatch(setCommitList(_todayCommitList))
   }, [commitList,]);
 
   return (
     <View style={styles.container}>
       <Header userName={userName  || ``} />
-      <TodayCommit count={3} />
-      <FirstRepoList message={`새기능 #32 로그인 페이지 구현`}/>
+      <TodayCommit count={todayCommitList.length} />
+      <FirstRepoList message={todayCommitList[0]?.message || ``}/>
       <AllCommitList />
       <Setting />
     </View>

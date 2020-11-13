@@ -10,7 +10,7 @@ import {
 } from './actions';
 import { postAccessToken, } from '../../api/githubAccessToken';
 import { getGithubUserName, } from '../../api/githubUserInfo';
-import { getGithubUserRepos, } from '../../api/githubTodayCommitHistory';
+import { getGithubUserRepos, } from '../../api/githubRepoList';
 import { getGithubCommits, } from '../../api/githubCommitList';
 import { takeEvery, } from 'redux-saga/effects';
 import createAsyncSaga from '../../lib/createAsyncSaga';
