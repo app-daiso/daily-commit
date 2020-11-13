@@ -81,30 +81,8 @@ export function HomeScreen({ route, }: Props ) {
         const repoName = commit[0];
         const commits = commit[1];
 
-        const filterCommit = commits.map(data => {
-          const todayTimestamp = new Date();
-          const commitTimestamp = new Date(data.commit?.author?.date).getTime();
-          let todayTimestamp00_00: number = 0;
-          let todayTimestamp24_00: number = 0;
-  
-          todayTimestamp.setHours(0);
-          todayTimestamp.setMinutes(0);
-          todayTimestamp.setSeconds(0);
-          todayTimestamp00_00 = todayTimestamp.getTime();
-          todayTimestamp.setHours(23);
-          todayTimestamp.setMinutes(59);
-          todayTimestamp.setSeconds(59);
-          todayTimestamp24_00 = todayTimestamp.getTime();
-
+        const filterCommit = commits.map(data => {        
           if (data.commit?.author.name !== userName) {
-            return;
-          }
-
-          if (commitTimestamp <= todayTimestamp00_00) {
-            return;
-          }
-
-          if (commitTimestamp > todayTimestamp24_00) {
             return;
           }
           

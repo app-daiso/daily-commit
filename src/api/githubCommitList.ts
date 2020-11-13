@@ -1,7 +1,20 @@
 import axios from 'axios';
 
 export async function getGithubCommits(request: GetCommitListRequest) {
-  const response = await axios.get<GetCommitListResponse>(`https://api.github.com/repos/${request.fullName}/commits`, {
+  const todayTimestamp = new Date();
+  let todayTimestamp00_00 = ``;
+  let todayTimestamp24_00 = ``;
+
+  todayTimestamp.setHours(0);
+  todayTimestamp.setMinutes(0);
+  todayTimestamp.setSeconds(0);
+  todayTimestamp00_00 = todayTimestamp.toISOString();
+  todayTimestamp.setHours(23);
+  todayTimestamp.setMinutes(59);
+  todayTimestamp.setSeconds(59);
+  todayTimestamp24_00 = todayTimestamp.toISOString();
+
+  const response = await axios.get<GetCommitListResponse>(`https://api.github.com/repos/${request.fullName}/commits?since=${todayTimestamp00_00}&before=${todayTimestamp24_00}`, {
     headers: {
       Accept: `application/vnd.github.v3+json`,
       Authorization: request.token,
