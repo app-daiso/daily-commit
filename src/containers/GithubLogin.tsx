@@ -25,7 +25,7 @@ function GithubLoginContainer() {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: '7f6d75fe84b0b867318e',
-      scopes: ['identity,'],
+      scopes: ['read:org,'],
       redirectUri: REDIRECT_URL,
     },
     discovery,

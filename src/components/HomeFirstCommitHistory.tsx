@@ -2,12 +2,18 @@ import React from 'react';
 import { StyleSheet, Text, View, Dimensions, } from 'react-native';
 import { colors, } from '../lib/colors';
 
-function HomeFirstCommitHistory() {  
+type Props = {
+  message: string;
+}
+
+function HomeFirstCommitHistory({
+  message,
+}: Props) {  
   return (    
     <View style={styles.container}>
       <Text style={styles.text}>오늘의 첫 커밋 메세지</Text>
       <View style={styles.content}>
-        <Text style={styles.contentText}>새기능 #32 로그인 페이지 구현</Text>
+        <Text style={styles.contentText}>{message}</Text>
       </View>      
     </View>
   );

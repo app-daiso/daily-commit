@@ -2,11 +2,18 @@ import {
   combineReducers,
 } from 'redux';
 import github from './github/reducer';
-import { githubSaga, githubUserNameSaga, } from './github';
+import { 
+  githubRepoListSaga, 
+  githubSaga, 
+  githubUserNameSaga,
+  githubCommitListSaga, 
+} from './github';
+import todayCommitList from './todayCommit';
 import { all, } from 'redux-saga/effects';
 
 const rootReducer = combineReducers({
   github,
+  todayCommitList,
 });
 
 export default rootReducer;
@@ -17,5 +24,7 @@ export function* rootSaga() {
   yield all([
     githubSaga(),
     githubUserNameSaga(),
+    githubRepoListSaga(),
+    githubCommitListSaga(),
   ]);
 }
