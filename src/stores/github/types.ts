@@ -40,5 +40,5 @@ export type GithubCommitListState = {
 }
 
 export interface GithubCommitListData {
-  [index: string]: CommitList;
+  [index: string]: CommitList[];
 }
