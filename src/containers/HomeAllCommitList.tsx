@@ -1,15 +1,29 @@
-import React from 'react';
-import { StyleSheet, Text, View, Dimensions, } from 'react-native';
+import React, { useEffect, useState, } from 'react';
+import { StyleSheet, View, } from 'react-native';
 import { colors, } from '../lib/colors';
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 
-function HomeAllCommitList() {  
+type Props = {
+  dates: {
+    date: string;
+  }[];
+}
+
+function HomeAllCommitList({
+  dates,
+}: Props) {
+  const [value, setValue] = useState(dates);
+
+  useEffect(() => {
+    setValue(dates);
+  }, []);
+
   return (    
     <View style={styles.container}>
       <CalendarHeatmap
-        endDate={new Date("2020-11-09")}
+        endDate={new Date()}
         numDays={100}
-        values={staticData}
+        values={value}
       />
     </View>
   );
@@ -30,17 +44,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-  
-export const staticData = [
-  { date: "2020-11-09" },
-  { date: "2020-11-09" },
-  { date: "2020-11-04" },
-  { date: "2020-11-09" },
-  { date: "2020-11-05" },
-  { date: "2020-11-09" },
-  { date: "2020-11-08" },
-  { date: "2020-11-08" },
-];
 
 export default HomeAllCommitList;

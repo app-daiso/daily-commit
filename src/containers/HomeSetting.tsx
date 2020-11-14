@@ -13,21 +13,7 @@ function HomeSetting() {
       }}>
         <Content>
 
-          <ListItem icon>
-            <Left>
-              <Button style={{ backgroundColor: colors.main }}>
-                <Icon active name="notifications" />
-              </Button>
-            </Left>
-            <Body>
-              <Text>푸쉬 알림</Text>
-            </Body>
-            <Right>
-              <Switch value={true} />
-            </Right>
-          </ListItem>
-
-          <ListItem icon>
+        <ListItem icon>
             <Left>
               <Button style={{ backgroundColor: colors.main }}>
                 <Icon active name="grid" />
@@ -40,6 +26,20 @@ function HomeSetting() {
               <Switch value={true} />
             </Right>
           </ListItem>
+
+          <ListItem icon>
+            <Left>
+              <Button style={{ backgroundColor: colors.main }}>
+                <Icon active name="notifications" />
+              </Button>
+            </Left>
+            <Body>
+              <Text>푸쉬 알림</Text>
+            </Body>
+            <Right>
+              <Switch value={true} />
+            </Right>
+          </ListItem>          
 
           <ListItem icon>
             <Left>

@@ -1,5 +1,11 @@
 import { createReducer, } from 'typesafe-actions';
-import { GithubState, GithubAction, GithubUserNameState, GithubRepoListState, GithubCommitListState, } from './types';
+import { 
+  GithubState, 
+  GithubAction, 
+  GithubUserNameState, 
+  GithubRepoListState, 
+  GithubCommitListState,
+} from './types';
 import { 
   POST_ACCESS_TOKEN_REQUEST, POST_ACCESS_TOKEN_SUCCESS, POST_ACCESS_TOKEN_FAILURE, 
   GET_USER_NAME_REQUEST, GET_USER_NAME_SUCCESS, GET_USER_NAME_FAILURE,
@@ -141,7 +147,7 @@ const github = createReducer<GithubState
         ...(state as any).commitList.data,
       },
     }
-  }),
+  }),  
 });
 
 export default github;

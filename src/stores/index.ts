@@ -9,11 +9,13 @@ import {
   githubCommitListSaga, 
 } from './github';
 import todayCommitList from './todayCommit';
+import totalCommitActivity from './totalCommitActivity';
 import { all, } from 'redux-saga/effects';
 
 const rootReducer = combineReducers({
   github,
   todayCommitList,
+  totalCommitActivity,
 });
 
 export default rootReducer;

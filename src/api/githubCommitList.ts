@@ -5,10 +5,12 @@ export async function getGithubCommits(request: GetCommitListRequest) {
   let todayTimestamp00_00 = ``;
   let todayTimestamp24_00 = ``;
 
+  todayTimestamp.setDate(todayTimestamp.getDate() - 100);
   todayTimestamp.setHours(0);
   todayTimestamp.setMinutes(0);
   todayTimestamp.setSeconds(0);
   todayTimestamp00_00 = todayTimestamp.toISOString();
+  todayTimestamp.setDate(todayTimestamp.getDate());
   todayTimestamp.setHours(23);
   todayTimestamp.setMinutes(59);
   todayTimestamp.setSeconds(59);
