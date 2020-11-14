@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, } from 'react';
 import { StyleSheet, View, } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../shared-interfaces';
@@ -26,8 +26,7 @@ export type Props = StackScreenProps<RootStackParamList, 'Home'>;
 
 export function HomeScreen({ route, }: Props ) {
   const dispatch = useDispatch();
-  let [updateTrigger, setUpdateTrigger] = useState(0);
-  
+
   const accessToken = useSelector((state: RootState) => (state.github as GithubState).accessToken).data?.access_token;
 
   const userName = useSelector((state: RootState) => (state.github as GithubUserNameState).userName).data?.name;
@@ -46,19 +45,7 @@ export function HomeScreen({ route, }: Props ) {
 
   const totalCommitActivity = useSelector((state: RootState) => state.totalCommitActivity.date);
   
-  useEffect(() => {
-    dispatch(getRepoListAsync.request({
-      token: `Bearer ${accessToken}`,
-    }));
-  }, [accessToken,]);
-
-  useEffect(() => {
-    dispatch(getUserNameAsync.request({
-      token: `Bearer ${accessToken}`,
-    }));
-  }, [accessToken,]);
-
-  useEffect(() => {
+  const loadCommitList = () => {
     if (!repoList) {
       return;
     }
@@ -68,10 +55,10 @@ export function HomeScreen({ route, }: Props ) {
         token: `Bearer ${accessToken}`,
         fullName: repo.full_name,
       }));
-    });    
-  }, [repoList,]);
+    });
+  }
 
-  useEffect(() => {
+  const renderCommitActivity = () => {
     if (!userName) {
       return;
     }
@@ -79,7 +66,7 @@ export function HomeScreen({ route, }: Props ) {
     if (!commitList) {
       return;
     }
-    
+    console.log(`start`);
     const _totalCommitList: {date: string}[] = [];
     const _todayCommitList = Object.entries(commitList)
       .map(commit => {
@@ -139,18 +126,33 @@ export function HomeScreen({ route, }: Props ) {
       });
       dispatch(setCommitList(_todayCommitList));
       dispatch(setTotalCommitActivity(_totalCommitList));
-  }, [commitList, updateTrigger,]);
+  }
 
   useEffect(() => {
-    console.log(`start update`, updateTrigger);
-    updateTrigger += 1;
-    setInterval(() => {
-      console.log(`update`, updateTrigger);
-      updateTrigger += 1;
-      setUpdateTrigger(updateTrigger);
-    }, 1000 * 60 * 5);
+    dispatch(getRepoListAsync.request({
+      token: `Bearer ${accessToken}`,
+    }));
+  }, [accessToken,]);
 
-    setUpdateTrigger(updateTrigger);
+  useEffect(() => {
+    dispatch(getUserNameAsync.request({
+      token: `Bearer ${accessToken}`,
+    }));
+  }, [accessToken,]);
+
+  useEffect(() => {
+    loadCommitList();
+  }, [repoList,]);
+
+  useEffect(() => {    
+    renderCommitActivity();
+    
+  }, [commitList,]);
+
+  useEffect(() => {
+    setInterval(() => {
+      loadCommitList();
+    }, 1000 * 60 * 5);
   }, []);
 
   return (
