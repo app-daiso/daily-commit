@@ -1,5 +1,5 @@
-import React, { useEffect, useState, } from 'react';
-import { StyleSheet, View, } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, } from 'react-native';
 import { colors, } from '../lib/colors';
 import CalendarHeatmap from 'react-native-calendar-heatmap';
 
@@ -11,19 +11,13 @@ type Props = {
 
 function HomeAllCommitList({
   dates,
-}: Props) {
-  const [value, setValue] = useState(dates);
-
-  useEffect(() => {
-    setValue(dates);
-  }, [dates]);
-
+}: Props) {  
   return (    
     <View style={styles.container}>
       <CalendarHeatmap
         endDate={new Date()}
         numDays={100}
-        values={value}
+        values={dates}
       />
     </View>
   );
@@ -44,5 +38,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export const testData = [
+  { date: `2020-11-02` },
+];
 
 export default HomeAllCommitList;

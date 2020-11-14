@@ -13,7 +13,7 @@ function HomeHeader({
   return (    
     <>      
       <Header 
-        centerComponent={{ text: `${userName}님 안녕하세요!`, style: { color: '#fff' } }} style={styles.header} containerStyle={{backgroundColor: colors.main, height: '10%', }}
+        centerComponent={{ text: `${userName}`, style: { color: '#fff' } }} style={styles.header} containerStyle={{backgroundColor: colors.main, height: '10%', }}
         rightComponent={
           <ThemeProvider
             theme={{

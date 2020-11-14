@@ -35,6 +35,7 @@ export type GithubCommitListState = {
   commitList: {
     loading: boolean;
     error: Error | null;
+    errorCount: number;
     data: GithubCommitListData | null;
   };
 }

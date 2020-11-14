@@ -10,7 +10,7 @@ import {
   POST_ACCESS_TOKEN_REQUEST, POST_ACCESS_TOKEN_SUCCESS, POST_ACCESS_TOKEN_FAILURE, 
   GET_USER_NAME_REQUEST, GET_USER_NAME_SUCCESS, GET_USER_NAME_FAILURE,
   GET_REPO_LIST_REQUEST, GET_REPO_LIST_SUCCESS, GET_REPO_LIST_FAILURE,
-  GET_COMMIT_LIST_REQUEST, GET_COMMIT_LIST_SUCCESS, GET_COMMIT_LIST_FAILURE,
+  GET_COMMIT_LIST_REQUEST, GET_COMMIT_LIST_SUCCESS, GET_COMMIT_LIST_FAILURE, SET_COMMIT_LIST_ERROR_COUNT_INIT,
 } from './actions';
 
 const initialState: GithubState 
@@ -35,6 +35,7 @@ const initialState: GithubState
   commitList: {
     loading: false,
     error: null,
+    errorCount: 0,
     data: null,
   },
 };
@@ -124,6 +125,7 @@ const github = createReducer<GithubState
     commitList: {
       loading: true,
       error: null,
+      errorCount: 0,
       data: null,
     }
   }),
@@ -132,6 +134,7 @@ const github = createReducer<GithubState
     commitList: {
       loading: false,
       error: null,
+      errorCount: (state as any).commitList.errorCount,
       data: {
         ...(state as any).commitList.data,
         [action.payload.repo]: action.payload.data,
@@ -143,6 +146,7 @@ const github = createReducer<GithubState
     commitList: {
       loading: false,
       error: action.payload,
+      errorCount: ++(state as any).commitList.errorCount,
       data: {
         ...(state as any).commitList.data,
       },

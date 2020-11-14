@@ -1,4 +1,4 @@
-import React, { useEffect, } from 'react';
+import React, { useEffect, useState, } from 'react';
 import { StyleSheet, View, } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../shared-interfaces';
@@ -25,6 +25,7 @@ import { setTotalCommitActivity, } from '../../stores/totalCommitActivity';
 export type Props = StackScreenProps<RootStackParamList, 'Home'>;
 
 export function HomeScreen({ route, }: Props ) {
+  const [commitMessageLoading, setCommitMessageLoading] = useState(false);
   const dispatch = useDispatch();
 
   const accessToken = useSelector((state: RootState) => (state.github as GithubState).accessToken).data?.access_token;
@@ -40,6 +41,7 @@ export function HomeScreen({ route, }: Props ) {
   const commitList = useSelector((state: RootState) => (state.github as GithubCommitListState).commitList).data;
   const commitListLoading = useSelector((state: RootState) => (state.github as GithubCommitListState).commitList).loading;
   const commitListError = useSelector((state: RootState) => (state.github as GithubCommitListState).commitList).error;
+  const commitListErrorCount = useSelector((state: RootState) => (state.github as GithubCommitListState).commitList).errorCount;
 
   const todayCommitList = useSelector((state: RootState) => state.todayCommitList.todayCommitList);
 
@@ -49,6 +51,8 @@ export function HomeScreen({ route, }: Props ) {
     if (!repoList) {
       return;
     }
+    
+    dispatch(setTotalCommitActivity([]));
 
     repoList.forEach(repo => {
       dispatch(getCommitListAsync.request({
@@ -59,6 +63,7 @@ export function HomeScreen({ route, }: Props ) {
   }
 
   const renderCommitActivity = () => {
+    setCommitMessageLoading(true);
     if (!userName) {
       return;
     }
@@ -66,7 +71,15 @@ export function HomeScreen({ route, }: Props ) {
     if (!commitList) {
       return;
     }
-    console.log(`start`);
+
+    if (!repoList) {
+      return;
+    }
+
+    if (Object.keys(commitList).length < repoList.length - commitListErrorCount) {
+      return;
+    }
+
     const _totalCommitList: {date: string}[] = [];
     const _todayCommitList = Object.entries(commitList)
       .map(commit => {
@@ -124,8 +137,10 @@ export function HomeScreen({ route, }: Props ) {
       .sort((a, b) => {
         return b.timestamp - a.timestamp;
       });
-      dispatch(setCommitList(_todayCommitList));
-      dispatch(setTotalCommitActivity(_totalCommitList));
+    dispatch(setCommitList(_todayCommitList));
+    dispatch(setTotalCommitActivity(_totalCommitList));
+
+    setCommitMessageLoading(false);
   }
 
   useEffect(() => {
@@ -141,26 +156,56 @@ export function HomeScreen({ route, }: Props ) {
   }, [accessToken,]);
 
   useEffect(() => {
+    if (repoListLoading) {
+      return;
+    }
+
+    if (repoListError) {
+      return;
+    }
+
     loadCommitList();
   }, [repoList,]);
 
   useEffect(() => {    
+    if (commitListLoading) {
+      return;
+    }
+
+    if (commitListError) {
+      return;
+    }
+
     renderCommitActivity();
     
   }, [commitList,]);
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {      
       loadCommitList();
     }, 1000 * 60 * 5);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <View style={styles.container}>
-      <Header userName={userName  || ``} />
+      <Header userName={
+        userNameLoading
+        ? `로딩 중...`
+        : userNameError
+        ? `에러 발생`
+        : userName + `님 안녕하세요!`  || ``
+        } 
+      />
       <TodayCommit count={todayCommitList.length} />
-      <FirstRepoList message={todayCommitList[0]?.message || `오늘 커밋 메세지가 없습니다.`}/>
-      <AllCommitList dates={totalCommitActivity || []}/>
+      <FirstRepoList message={
+        commitMessageLoading
+        ? `커밋 메세지 불러오는 중...`
+        : todayCommitList[0]?.message || `오늘 커밋 메세지가 없습니다.`
+      }/>
+      {totalCommitActivity.length === 0
+      ? null
+      : <AllCommitList dates={totalCommitActivity || []}/>}
       <Setting />
     </View>
   );

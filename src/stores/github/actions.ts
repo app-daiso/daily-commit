@@ -42,6 +42,7 @@ export const getRepoListAsync = createAsyncAction(
 export const GET_COMMIT_LIST_REQUEST = `github/GET_COMMIT_LIST_REQUEST`;
 export const GET_COMMIT_LIST_SUCCESS = `github/GET_COMMIT_LIST_SUCCESS`;
 export const GET_COMMIT_LIST_FAILURE = `github/GET_COMMIT_LIST_FAILURE`;
+export const SET_COMMIT_LIST_ERROR_COUNT_INIT = `github/SET_COMMIT_LIST_ERROR_COUNT_INIT`;
 
 export const getCommitListAsync = createAsyncAction(
   GET_COMMIT_LIST_REQUEST,
