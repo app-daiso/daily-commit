@@ -80,7 +80,7 @@ export function HomeScreen({ route, }: Props ) {
       return;
     }
     
-    const _totalCommitList: {date: string; count: number;}[] = [];
+    const _totalCommitList: {date: string}[] = [];
     const _todayCommitList = Object.entries(commitList)
       .map(commit => {
         const repoName = commit[0];
@@ -109,7 +109,6 @@ export function HomeScreen({ route, }: Props ) {
 
             _totalCommitList.push({
               date: `${commitDate.getFullYear()}-${(`0` + (commitDate.getMonth() + 1)).slice(-2)}-${(`0` + commitDate.getDate()).slice(-2)}`,
-              count: 1
             });
 
             if (commitTimestamp <= todayTimestamp00_00) {
@@ -143,12 +142,15 @@ export function HomeScreen({ route, }: Props ) {
   }, [commitList, updateTrigger,]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.info(`Update State`);
+    console.log(`start update`, updateTrigger);
+    updateTrigger += 1;
+    setInterval(() => {
+      console.log(`update`, updateTrigger);
       updateTrigger += 1;
       setUpdateTrigger(updateTrigger);
-    }, 1000 * 60 * 5);    
-    return () => clearInterval(interval);
+    }, 1000 * 60 * 5);
+
+    setUpdateTrigger(updateTrigger);
   }, []);
 
   return (

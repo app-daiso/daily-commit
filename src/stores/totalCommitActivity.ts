@@ -1,13 +1,12 @@
 type TotalCommitState = {
   date: {
     date: string;
-    count: number;
   }[];
 };
 
 const SET_TOTAL_COMMIT_ACTIVITY = 'totalCommitActivity/SET_TOTAL_COMMIT_ACTIVITY' as const;
 
-export const setTotalCommitActivity = (diff: {date: string; count: number;}[]) => ({
+export const setTotalCommitActivity = (diff: {date: string}[]) => ({
   type: SET_TOTAL_COMMIT_ACTIVITY,
   payload: diff,
 });
