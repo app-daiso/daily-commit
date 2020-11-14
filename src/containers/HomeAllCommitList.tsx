@@ -16,7 +16,7 @@ function HomeAllCommitList({
 
   useEffect(() => {
     setValue(dates);
-  }, []);
+  }, [dates]);
 
   return (    
     <View style={styles.container}>
