@@ -11,7 +11,7 @@ function HomeFirstCommitHistory({
 }: Props) {  
   return (    
     <View style={styles.container}>
-      <Text style={styles.text}>오늘의 첫 커밋 메세지</Text>
+      <Text style={styles.text}>오늘의 마지막 커밋 메세지</Text>
       <View style={styles.content}>
         <Text style={styles.contentText}>{message}</Text>
       </View>      
